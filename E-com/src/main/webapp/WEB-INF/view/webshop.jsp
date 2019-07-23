@@ -1,5 +1,8 @@
+<%@ page import="com.comtrade.entiteti.Racun" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.comtrade.entiteti.Stavke" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -96,8 +99,8 @@
       <h1><em>WEBSHOP</em></h1>
     </div>
     <!-- KRAJ NASLOVA STRANE -->
-    <form class="prodavnica" id="proizvodi">
-    	<c:forEach var="brend" items="${sviBrendovi}">
+
+    <c:forEach var="brend" items="${sviBrendovi}">
 	  <div class="page-header">
 
         <!-- POČETAK BOKSEVA -->
@@ -124,14 +127,15 @@
             <div class="okvir0">
 
               <!-- FOTOGRAFIJA 1 -->
-              <c:forEach var = "proizvod" items="${sviProizvodi}">
+
+              <c:forEach var = "proizvod" items="${sviProizvodi}" varStatus="brojac">
               <c:if test="${proizvod.brend.id_brand == brend.id_brand}">
               	<c:if test="${proizvod.brend.id_brand == proizvod.brend.id_brand}">
               <div class="okvir1">
                 <div>
                   <p>
                     <h3>
-                      <strong>DHC-12 Zeno</strong>
+                      <strong>${fn:toUpperCase(proizvod.naziv)}</strong>
                     </h3>
                   
                   <a>
@@ -139,24 +143,27 @@
                   </a>
                 </div>
                 <p>
-                  <strong>40,150.00 RSD</strong>
+                  <strong>${proizvod.cena}</strong>
+                </p>
+                <form:form method="post" action="/dodavanjeRacuna">
+                <p>
+                  Kolicina <label for="jedan"></label>
+                  <input type="text" id="jedan" name="tfKolicina" size="1" placeholder="0">
+
                 </p>
                 <p>
-                  Naručujem <label for="jedan"></label>
-                  <input type="text" id="jedan" name="" size="1" placeholder="0"> komada
-                </p>
-                <p>
-                  <a class="btn btn-primary btn-sm" href="#krajodabira" role="button">
-                    Završi kupovinu
-                    <i class="fas fa-arrow-alt-circle-down"></i>
-                  </a>
+
+                  <input type="hidden" name="idProizvoda" value="${proizvod.id_proizvod}">
+                  <input type="submit" value="Dodaj">
+                  </form:form>
                 </p>
               </div>
+
               		</c:if>
             	</c:if>
 			 </c:forEach>
             </div>
-           
+
             <!-- KRAJ SA FOTOGRAFIJAMA PROIZVODA -->
 
           </div>
@@ -182,8 +189,13 @@
                   <label for="btn-izracunaj">
 
                   </label>
+                  <br><br>
+                  <c:forEach var="list" items="list">
+                    <c:out value="${list}"></c:out>
+
+                  </c:forEach>
                   <input type="submit" value="Ukupan iznos" id="btn-izracunaj" name="">
-                  <input type="text" id="txt-izracunaj" placeholder="0.00 RSD" name="">
+                  <input type="text" id="txt-izracunaj" value="" name="">
                 </p>
                 <div id="rezultati">
                 </div>
@@ -191,7 +203,7 @@
                 <div id="rezultati1">
                 </div>
                 <p>
-                  <a class="btn btn-primary btn-lg" href="kontakt.html" role="button">Prijavite se</a>
+                  <a class="btn btn-primary btn-lg" href="" role="button">Kupi</a>
                 </p>
               </div>
             </div>
@@ -199,7 +211,7 @@
         </div>
       </div>
 
-    </form>
+
     <!-- POČETAK FOOTER-A -->
     <footer>
       <div class="row">

@@ -13,8 +13,7 @@ public interface ProizvodServis {
 
 	List<Proizvod> sviProizvodiZaIdBrenda(int brendId);
 
-	
+	Proizvod findProizvodById(Integer id);
 
-	
-	
+
 }

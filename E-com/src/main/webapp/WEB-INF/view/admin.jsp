@@ -20,14 +20,15 @@ Opis<br><textarea name="opis" rows="40" cols="120" wrap="soft"></textarea>
 <br><input type="submit" value=" Posalji"><br>
 </form:form>
 <br><br><br>
-<form:form action="/brisanjeBrenda" method="delete">
+<form:form action="/brisanjeBrenda" method="delete" modelAttribute="brend">
 <table>
 	<c:forEach var="temp1" items="${sviBrendovi}">
-		<tr>
-			<td><input type="hidden" name="idB" value="${temp1.id_brand}"/></td>
-			<td>${temp1.naziv}</td>
-			<td><input type="submit" value="Obrisi"></td>
-		</tr>
+			<tr>
+				<td>${temp1.naziv}</td>
+				<td><input type="hidden" name="idB" value="${temp1.id_brand}"/>
+					<input type="submit" value="Obrisi">
+				</td>
+			</tr>
 	</c:forEach>
 </table>
 </form:form>

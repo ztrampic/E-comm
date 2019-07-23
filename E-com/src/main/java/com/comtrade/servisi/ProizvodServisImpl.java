@@ -43,15 +43,12 @@ public class ProizvodServisImpl implements ProizvodServis {
 		return list;
 	}
 
-	
+	@Override
+	@Transactional
+	public Proizvod findProizvodById(Integer id) {
+		Proizvod proizvod = proizvodRepozitory.findProizvodById(id);
+		return proizvod;
+	}
 
-	
 
-	
-
-	
-
-
-	
-	
 }
