@@ -94,9 +94,10 @@
     </nav>
     <!-- KRAJ NAVIGACIJE -->
 
+
     <!-- POČETAK NASLOVA STRANE -->
     <div class="page-header">
-      <h1><em>WEBSHOP</em></h1>
+      <h1><em>WEBSHO</em></h1>
     </div>
     <!-- KRAJ NASLOVA STRANE -->
 
@@ -145,18 +146,19 @@
                 <p>
                   <strong>${proizvod.cena}</strong>
                 </p>
-                <form:form method="post" action="/dodavanjeRacuna">
+                <form:form method="post" action="/dodajProizvod">
                 <p>
                   Kolicina <label for="jedan"></label>
                   <input type="text" id="jedan" name="tfKolicina" size="1" placeholder="0">
+                  <input type="text" value="${prijavljeniKorisnik.id_kupac}" name="idtrenutnogKorisnika">
 
                 </p>
                 <p>
-
                   <input type="hidden" name="idProizvoda" value="${proizvod.id_proizvod}">
                   <input type="submit" value="Dodaj">
                   </form:form>
                 </p>
+
               </div>
 
               		</c:if>
@@ -181,7 +183,7 @@
           <div class="row">
             <div class="col-md-12">
               <h2>
-                Detalji narudzbenice
+
               </h2>
 
               <div class="grupaizracunavanje">
@@ -190,21 +192,20 @@
 
                   </label>
                   <br><br>
-                  <c:forEach var="list" items="list">
-                    <c:out value="${list}"></c:out>
 
-                  </c:forEach>
-                  <input type="submit" value="Ukupan iznos" id="btn-izracunaj" name="">
-                  <input type="text" id="txt-izracunaj" value="" name="">
+
                 </p>
                 <div id="rezultati">
                 </div>
                 <br>
                 <div id="rezultati1">
                 </div>
-                <p>
-                  <a class="btn btn-primary btn-lg" href="" role="button">Kupi</a>
-                </p>
+                  <form:form method="post" action="/dodavanjeRacuna">
+                    <input type="submit" value="KUPI" name="finalnaKupovina" class="btn btn-primary btn-lg"/>
+                    <input type="text" value="${racun.id_racun}" name = "blankoRacun">
+                    <input type="text" value="${prijavljeniKorisnik.id_kupac}" name="idtrenutnogKorisnika">
+
+                  </form:form>
               </div>
             </div>
           </div>
@@ -247,6 +248,8 @@
   <script src="${pageContext.request.contextPath }/js/mojjs.js"></script>
 
   <script src="${pageContext.request.contextPath }/js/korpa.js"></script>
+
+
 
 
 </body>

@@ -107,50 +107,28 @@
 					Prezime<br><br><form:input path="prezime"/><br>
 					E-mail<br><br><form:input path="email"/><br>
 					Password<br><br><form:input path="password"/><br>
-					
-                  <!-- <label for="ime">Ime</label>
-                  <input type="text" id="ime" name="ime" placeholder="Unesite vaše ime">
-				
-                  <label for="prezime">Prezime</label>
-                  <input type="text" id="prezime" name="prezime" placeholder="Unesite vaše prezime">
-
-                  <label for="email">E-mail adresa</label>
-                  <input type="text" id="email" name="email" placeholder="Unesite vašu e-mail adresu">
-
-                  <label for="password">Password</label>
-                  <input type="text" id="password" name="password" placeholder="Unesite password">
- -->
 
                   <input type="submit" value="POŠALJI">
                 </form:form>
-
-
               </div>
-
             </div>
-            <!-- KRAJ LEVOG BOKSA -->
-
-
-            <!-- POČETAK DESNOG BOKSA -->
             <div class="col-md-6">
               <div class="jumbotron">
-
-
                 <h2>Prijavite se</h2>
-                <form class="formular" name="formular" method="post" action="">
+                <form:form class="formular" name="formular" method="post" action="/tryLogin" modelAttribute="kupac">                  <!--  za online u action dodati kontakt.php -->
 
+                  E-mail<br><br><form:input path="email"/><br>
+                  Password<br><br><form:input path="password"/><br>
+
+                  <input type="submit" value="LOGIN">
+                </form:form>
+                <%--<form class="formular" name="formular" method="post" action="">
                   <label for="email2">E-mail adresa</label>
                   <input type="text" id="email2" name="email2" placeholder="Unesite vašu e-mail adresu">
-
-
-
-
                   <label for="password2">Password</label>
                   <input type="text" id="password2" name="password2" placeholder="Unesite password">
-
-
                   <input type="button" value="LOGIN" onclick="proveri2()">
-                </form>
+                </form>--%>
 
               </div>
             </div>
