@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -150,7 +151,7 @@
                 <p>
                   Kolicina <label for="jedan"></label>
                   <input type="text" id="jedan" name="tfKolicina" size="1" placeholder="0">
-                  <input type="text" value="${prijavljeniKorisnik.id_kupac}" name="idtrenutnogKorisnika">
+                  <input type="text" value="${sessionScope.ulogovanKorisnik.id_kupac}" name="idtrenutnogKorisnika">
 
                 </p>
                 <p>
@@ -203,7 +204,7 @@
                   <form:form method="post" action="/dodavanjeRacuna">
                     <input type="submit" value="KUPI" name="finalnaKupovina" class="btn btn-primary btn-lg"/>
                     <input type="text" value="${racun.id_racun}" name = "blankoRacun">
-                    <input type="text" value="${prijavljeniKorisnik.id_kupac}" name="idtrenutnogKorisnika">
+                    <input type="text" value="${sessionScope.ulogovanKorisnik.id_kupac}" name="idtrenutnogKorisnika">
 
                   </form:form>
               </div>

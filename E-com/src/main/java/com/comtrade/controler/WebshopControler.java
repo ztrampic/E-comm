@@ -21,6 +21,8 @@ import com.comtrade.servisi.ProizvodServis;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -56,16 +58,18 @@ public class WebshopControler {
 		
 	}
 	@PostMapping("/dodavanjeRacuna")
-	public String dodavanjeRacuna(Racun racun,Kupac kupac,Model model,Brend brend,Proizvod proizvod,Stavke stavke,
+	public String dodavanjeRacuna(Racun racun,Kupac kupac,Model model,Brend brend,Proizvod proizvod,Stavke stavke,HttpServletRequest request, HttpServletResponse response,
 								  @RequestParam("idtrenutnogKorisnika") Integer idKupca)
 								  {
 		if(idKupca == null){
 			return "login";
 		}
+		HttpSession session = request.getSession();
 		if(racun.getKupac() == null){
+			racun = (Racun) session.getAttribute("racun");
 			racun.setDatum(new Date());
 			racun.setBrojracuna(String.valueOf(poslednjiBrRacuna()));
-			kupac= kupacServis.findKupacById(idKupca);
+			kupac= (Kupac) session.getAttribute("ulogovanKorisnik");
 			racun.setKupac(kupac);
 			racunServis.save(racun); //trenutno //inace blanko prosledjivanje bez id
 		}
@@ -85,19 +89,30 @@ public class WebshopControler {
 
 
 	@PostMapping("/dodajProizvod")
-	public String korpaWebShop(Kupac kupac,Model model,Racun racun,Brend brend,Proizvod proizvod,Stavke stavke,
-							               @RequestParam("tfKolicina") Integer kolicina,
-							               @RequestParam("idProizvoda") Integer idProizvoda,
-	                                       @RequestParam("idtrenutnogKorisnika") Integer idKorisnika){
+	public String korpaWebShop(Kupac kup,Model model,HttpServletRequest request, HttpServletResponse response,
+							   @RequestParam("tfKolicina") Integer kolicina,
+							   @RequestParam("idProizvoda") Integer idProizvoda,
+							   @RequestParam("idtrenutnogKorisnika") Integer idKorisnika){
+
+		Brend brend = new Brend();
+		Proizvod proizvod = new Proizvod();
+		Stavke stavke = new Stavke();
+
 		if(idKorisnika==null){
 			return "login";
 		}
+		HttpSession session = request.getSession();
+		Racun racun = (Racun) session.getAttribute("racun");
+		Kupac kupac = (Kupac) session.getAttribute("ulogovanKorisnik");
 		Proizvod p = proizvodServis.findProizvodById(idProizvoda);
 		stavke.setProizvod(p);
 		stavke.setKolicina(kolicina);
+		stavke.setBrStavke(brojStavke(session));
 		racun.dodajStavke(stavke);
 
-		model.addAttribute("prijavljeniKorisnik", kupac);
+		session.setAttribute("racun",racun);
+		session.setAttribute("ulogovanKorisnik", kupac);
+
 		model.addAttribute("racun", racun);
 		model.addAttribute("brend", brend);
 		model.addAttribute("proizvod",proizvod);
@@ -119,5 +134,15 @@ public class WebshopControler {
 		}
 		return broj+1;
 	}
+	public Integer brojStavke(HttpSession session){
+		Integer brojStavke = 1;
+		Racun racun= (Racun) session.getAttribute("racun");
+		List<Stavke>list=racun.getListaStavki();
+		if(list.isEmpty()){
+			return brojStavke;
+		}
 
+
+		return brojStavke+list.size();
+	}
 }

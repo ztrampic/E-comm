@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -36,16 +38,18 @@ public class LoginControler {
 		
 	}
 	@PostMapping("/tryLogin")
-	public String tryLogin(Kupac kupac, Model model, Racun racun, Brend brend, Proizvod proizvod, Stavke stavke,
+	public String tryLogin(Kupac kupac, Model model, Racun racun, Brend brend, Proizvod proizvod, Stavke stavke, HttpServletRequest request, HttpServletResponse response,
 						   @RequestParam("email") String email, @RequestParam("password") String pass){
 		Kupac k = new Kupac();
+		HttpSession session = request.getSession();
 		k.setEmail(email);
 		k.setPassword(pass);
 		kupac = kupacLoginServis.tryLogin(k);
 		if(kupac == null){
 			return "redirect:login";
 		}
-		model.addAttribute("prijavljeniKorisnik",kupac);
+		session.setAttribute("racun",racun);
+		session.setAttribute("ulogovanKorisnik",kupac);
 		model.addAttribute("brend", brend);
 		model.addAttribute("proizvod",proizvod);
 		model.addAttribute("sviBrendovi", brendService.selectAll());
